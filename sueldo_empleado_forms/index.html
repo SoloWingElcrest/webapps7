@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Formulario de captura para calculo de sueldo</title>
+</head>
+<body>
+	<h1>Sueldo de un empleao</h1>
+	<p>Captura los siguientes datos para calcular el sueldo de un empleado y ver el desglose del mismo.</p>
+	<hr>
+	<form action="calculo_sueldo.php" method="get">
+		<label for="nombre">Nombre:</label>
+		<input type="text" name="nombre">
+		<br><br>
+
+		<label for="apellidos">Apellidos:</label>
+		<input type="text" name="apellidos">
+		<br><br>
+
+		<label for="ht">Horas trabajadas:</label>
+		<input type="text" name="ht">
+		<br><br>
+
+		<input type="submit" value="Calcular sueldo">
+	</form>
+</body>
+</html>
