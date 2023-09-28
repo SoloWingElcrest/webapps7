@@ -1,4 +1,13 @@
 <?php
+// Definimos una función para imprimir mensajes
+function printMsg($msg) {
+	echo "<ul>";
+	foreach($msg as $caca) {
+		echo "<li>$caca</li>";
+	}
+	echo "</ul>";
+}
+
 // definimos variables
 $nombre = $_GET['nombre'];
 $apellidos = $_GET['apellidos'];
@@ -8,10 +17,13 @@ $ht = $_GET['ht'];
 define("CUOTA_HORA_NORMAL",20);
 define("CUOTA_HORA_EXTRA",40);
 
-// Validamos que las horas trabajadas sean un numero entero positivo
-if($ht < 0 || !is_numeric($ht)) $error = 'El valor debe ser un numero entero mayor que 0';
-// Validamos que no existan cajas vacias
+// validamos que ninguna caja del formulario quede vacia utilizando un bucle 
+foreach ($_GET as $calzon => $caca) {
+	if($caca == "") $error[] = "La caja $calzon es requerida";
+}
 
+// Validamos que las horas trabajadas sean un numero entero positivo
+if($ht < 0 || !is_numeric($ht)) $error[] = 'El valor debe ser un numero entero mayor que 0';
 
 // Evaluamos si hay errores o no
 if(!isset($error)) {
@@ -69,7 +81,7 @@ else {
 		*/
 	}
 	else {
-		echo $error;
+		printMsg($error);
 	}?>
 
 
