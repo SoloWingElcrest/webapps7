@@ -1,4 +1,23 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<?php
+
+// Incluimos las utilerías
+include("helpers/utils.php");
+
+//Evaluamos si el formulario ha sido enviado, para eso checamos si está definido el indice del botón que envía el formulario
+if(isset($_POST['user_register_sent'])) {
+  
+  // Validamos si hay campos vacios
+  foreach($_POST as $calzon => $caca) {
+    if($caca == "" && $calzon != "phone") $error[] = "The $calzon field is required";
+  }
+
+  // Validamos si los passwords coinciden
+  if($_POST['password'] != $_POST['confirm_password']) $error[] = "The passwords didn't match";
+
+}
+
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -33,6 +52,7 @@ function MM_jumpMenuGo(objId,targ,restore){ //v9.0
 <div id="content" class="txt_content">
   <h2>User register</h2>
   <p>Use the form below to register a new user.</p>
+  <?php if(isset($error)) printMsg($error, "error"); ?>
   <form action="user_register.php" method="post">
     <table>
       <tr>
@@ -50,6 +70,10 @@ function MM_jumpMenuGo(objId,targ,restore){ //v9.0
       <tr>
         <td><label for="password">Password:*</label></td>
         <td><input type="password" name="password"></td>
+      </tr>
+      <tr>
+        <td><label for="confirm_password">Confirm password:*</label></td>
+        <td><input type="password" name="confirm_password"></td>
       </tr>
       <tr>
         <td><label for="phone">Phone:</label></td>
