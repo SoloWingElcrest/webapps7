@@ -1,18 +1,37 @@
 ﻿<?php
 
+// Incluimos la conexión a la base de datos
+include("connections/conn_localhost.php");
+
 // Incluimos las utilerías
 include("helpers/utils.php");
 
 //Evaluamos si el formulario ha sido enviado, para eso checamos si está definido el indice del botón que envía el formulario
 if(isset($_POST['user_register_sent'])) {
   
-  // Validamos si hay campos vacios
+  // Validamos si no hay campos vacios
   foreach($_POST as $calzon => $caca) {
     if($caca == "" && $calzon != "phone") $error[] = "The $calzon field is required";
   }
 
   // Validamos si los passwords coinciden
   if($_POST['password'] != $_POST['confirm_password']) $error[] = "The passwords didn't match";
+
+  // Si estamos libres de errores, procedemos a guardar el usuario en la BD
+  if(!isset($error)) {
+    // Preparamos el query para guardar el usuario en la BD
+    $queryInsertUser = sprintf(
+      "INSERT INTO users (firstname, lastname, email, password, phone, role) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')",
+      mysqli_real_escape_string($connLocalhost, trim($_POST['firstname'])),
+      mysqli_real_escape_string($connLocalhost, trim($_POST['lastname'])),
+      mysqli_real_escape_string($connLocalhost, trim($_POST['email'])),
+      mysqli_real_escape_string($connLocalhost, trim($_POST['password'])),
+      mysqli_real_escape_string($connLocalhost, trim($_POST['phone'])),
+      mysqli_real_escape_string($connLocalhost, trim($_POST['role']))
+    );
+
+
+  }
 
 }
 
@@ -53,6 +72,7 @@ function MM_jumpMenuGo(objId,targ,restore){ //v9.0
   <h2>User register</h2>
   <p>Use the form below to register a new user.</p>
   <?php if(isset($error)) printMsg($error, "error"); ?>
+  <?php printMsg($queryInsertUser, "exito"); ?>
   <form action="user_register.php" method="post">
     <table>
       <tr>
@@ -78,6 +98,15 @@ function MM_jumpMenuGo(objId,targ,restore){ //v9.0
       <tr>
         <td><label for="phone">Phone:</label></td>
         <td><input type="text" name="phone"></td>
+      </tr>
+      <tr>
+        <td><label for="role">Role:</label></td>
+        <td>
+          <select name="role">
+            <option value="agent" selected>Agent</option>
+            <option value="admin">Administrator</option>
+          </select>
+        </td>
       </tr>
       <tr>
         <td></td>
