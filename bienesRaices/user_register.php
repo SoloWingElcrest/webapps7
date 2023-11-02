@@ -30,6 +30,11 @@ if(isset($_POST['user_register_sent'])) {
       mysqli_real_escape_string($connLocalhost, trim($_POST['role']))
     );
 
+    // Ejecutamos el query
+    mysqli_query($connLocalhost, $queryInsertUser) or trigger_error("The user register query has failed.");
+
+    // Redireccionamos al usuario cuando todo ha salido bien
+    header("Location: cpanel.php?userRegister=true");
 
   }
 
@@ -72,7 +77,6 @@ function MM_jumpMenuGo(objId,targ,restore){ //v9.0
   <h2>User register</h2>
   <p>Use the form below to register a new user.</p>
   <?php if(isset($error)) printMsg($error, "error"); ?>
-  <?php printMsg($queryInsertUser, "exito"); ?>
   <form action="user_register.php" method="post">
     <table>
       <tr>
