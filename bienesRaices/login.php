@@ -23,6 +23,29 @@ if(isset($_POST["login_sent"])) {
       mysqli_real_escape_string($connLocalhost, trim($_POST['email'])),
       mysqli_real_escape_string($connLocalhost, trim($_POST['password']))
     );
+
+    // Ejecutamos el query y guardamos los resultados en una variable que es un resultset o recordet
+    $resQueryUserLogin = mysqli_query($connLocalhost, $queryUserLogin) or trigger_error("The user login query failed.");
+
+    // Determinamos si el login fue valido, para eso contamos los resultados encontrados
+    if(mysqli_num_rows($resQueryUserLogin)) {
+      // Hacemos un fetch de los resultados
+      $userData = mysqli_fetch_assoc($resQueryUserLogin);
+
+      // Definimos valores en SESSION que nos serán utiles en la app
+      $_SESSION["userId"] = $userData["id"];
+      $_SESSION["userFullname"] = $userData["firstname"]." ".$userData["lastname"];
+      $_SESSION["userEmail"] = $userData["email"];
+      $_SESSION["userRole"] = $userData["role"];
+
+      // Una vez que se definieron los valores en SESSION, redirigimos al usuario
+      header("Location: cpanel.php");
+    }
+    else {
+      $error[] = "Login failed";
+    }
+
+
   }
 
 }
@@ -66,6 +89,7 @@ function MM_jumpMenuGo(objId,targ,restore){ //v9.0
   &nbsp;
   <?php if(isset($error)) printMsg($error, "error"); ?>
   <?php if(isset($queryUserLogin)) printMsg($queryUserLogin, "exito"); ?>
+  <?php if(isset($userData)) var_dump($userData); ?>
   <form action="login.php" method="post">
     <table>
       <tr>

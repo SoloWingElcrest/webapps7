@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<?php
+session_start();
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -32,6 +35,7 @@ function MM_jumpMenuGo(objId,targ,restore){ //v9.0
 
 <div id="content" class="txt_content">
   <h2>My San Carlos Vacation listings</h2>
+  <?php var_dump($_SESSION); ?>
   <p><strong>San Carlos Mexico</strong>, nestled between the Sea of Cortez and the mountains, offers numerous activities both on shore and in the water. Awaiting you are soft sand beaches, two world class marinas, and an 18 hole, par 72 championship golf course. Whether you're looking for a lazy day on a secluded beach or want to hike, scuba dive and listen to live music all in one day — we have it all! You can even try your luck in one of the many fishing tournaments.</p>
 
   <p>The <strong>Guaymas / San Carlos</strong> destiny is placed 75 miles away from Hermosillo, the Capital of Sonora, and 242 miles from the United States' border; by his characteristics is considered the principal tourist center of the State. It has privileged natural attractions, impressive landscapes formed by an exceptional combination of desert, sea and mountain.</p>
