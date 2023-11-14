@@ -17,4 +17,11 @@ function printMsg($msg, $msg_type) {
 	echo "</div>";
 }
 
+// Lógica para cerrar la sesión cuando se detecte el flag logOff en $_GET y su valor sea igual a "true"
+if(isset($_GET["logOff"]) && $_GET["logOff"] == "true") {
+	// Destruimos la sesión
+	session_destroy();
+	// Redireccionamos al usuario al login
+	header("Location: login.php?loggedOff=true");
+}
 ?>

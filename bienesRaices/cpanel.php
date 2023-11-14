@@ -1,4 +1,15 @@
 ﻿<?php
+// Inicializamos la sesion
+if(!isset($_SESSION)) {
+  session_start();
+  // Evaluamos si el usuario ya ha iniciado sesión para determinar si  puede seguir en el documento o se le redirecciona (kick)
+  if(!isset($_SESSION["userId"])) {
+    // Redirigimos al usuario ya que no ha iniciado sesion
+    header("Location: login.php?auth=false");
+  }
+
+}
+
 // Incluimos las utilerías
 include("helpers/utils.php");
 ?>

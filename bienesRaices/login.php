@@ -2,6 +2,11 @@
 // Inicializamos la sesion
 if(!isset($_SESSION)) {
   session_start();
+  // Evaluamos si el usuario ya ha iniciado sesión para determinar si  puede seguir en el documento o se le redirecciona (kick)
+  if(isset($_SESSION["userId"])) {
+    // Redirigimos al usuario ya que no ha iniciado sesion
+    header("Location: cpanel.php");
+  }
 }
 
 // Incluimos la conexión a la base de datos y las utilerías
@@ -87,9 +92,12 @@ function MM_jumpMenuGo(objId,targ,restore){ //v9.0
 <div id="content" class="txt_content">
   <h2>User login</h2>
   &nbsp;
-  <?php if(isset($error)) printMsg($error, "error"); ?>
-  <?php if(isset($queryUserLogin)) printMsg($queryUserLogin, "exito"); ?>
-  <?php if(isset($userData)) var_dump($userData); ?>
+  <?php 
+  if(isset($error)) printMsg($error, "error");
+  if(isset($_GET["loggedOff"])) printMsg("Logged off... please come back soon!", "exito");
+  if(isset($_GET["auth"])) printMsg("You are not allowed to access, please login first", "error");
+  ?>
+
   <form action="login.php" method="post">
     <table>
       <tr>
